@@ -1,0 +1,10 @@
+# Ignorar arquivos do macOS
+.DS_Store
+
+# Ignorar arquivos do IntelliJ
+.idea/
+
+# Ignorar arquivos do Angular (frontend)
+front/.angular/
+^X
+
