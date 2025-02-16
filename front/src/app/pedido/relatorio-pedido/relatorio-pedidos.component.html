@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="filter">
+      <mat-form-field appearance="fill">
+        <mat-label>Filtrar por cliente</mat-label>
+        <input matInput [(ngModel)]="clienteId" placeholder="ID do cliente">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="getPedidos()">
+        <mat-icon>search</mat-icon> Buscar
+      </button>
+    </div>
+  
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let pedido"> {{pedido.id}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="cliente">
+        <th mat-header-cell *matHeaderCellDef> Cliente </th>
+        <td mat-cell *matCellDef="let pedido"> {{pedido.nomeCliente}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let pedido"> {{pedido.pedidoStatus}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef> Total </th>
+        <td mat-cell *matCellDef="let pedido"> {{pedido.total | currency}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef> Ações </th>
+        <td mat-cell *matCellDef="let pedido">
+          <!-- Botão para visualizar itens do pedido -->
+          <button mat-icon-button (click)="verItensPedido(pedido.id)" matTooltip="Ver Itens">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          
+          <!-- Botão para cancelar o pedido -->
+          <button mat-icon-button (click)="cancelarPedido(pedido.id)" matTooltip="Cancelar Pedido">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </td>
+      </ng-container>      
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  

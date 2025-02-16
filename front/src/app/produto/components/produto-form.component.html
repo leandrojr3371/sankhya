@@ -1,0 +1,67 @@
+<mat-card>
+    <h2>Cadastro de Produto</h2>
+    <form [formGroup]="produtoForm">
+      <mat-form-field>
+        <mat-label>Descrição</mat-label>
+        <input matInput formControlName="descricao">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Preço Unitário</mat-label>
+        <input matInput type="number" formControlName="precoUnitario">
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" (click)="cadastrar()">
+        {{ selectedProduto ? 'Atualizar' : 'Cadastrar' }}
+      </button>
+      <button mat-raised-button color="warn" (click)="resetForm()">Cancelar</button>
+    </form>
+  </mat-card>
+  
+  <mat-card>
+    <h2>Filtrar Produtos</h2>
+    <form [formGroup]="filtroForm">
+      <mat-form-field>
+        <mat-label>Descrição</mat-label>
+        <input matInput formControlName="descricao">
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" (click)="filtrar()">Filtrar</button>
+    </form>
+  </mat-card>
+  
+  <!-- Lista de Produtos -->
+<mat-card *ngIf="produtos$ | async as produtos">
+    <mat-card-header>
+      <mat-card-title>Lista de Produtos</mat-card-title>
+    </mat-card-header>
+  
+    <mat-table [dataSource]="produtos" class="mat-elevation-z8">
+      <ng-container matColumnDef="descricao">
+        <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+        <mat-cell *matCellDef="let produto"> {{ produto.descricao }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="precoUnitario">
+        <mat-header-cell *matHeaderCellDef> Preço Unitário </mat-header-cell>
+        <mat-cell *matCellDef="let produto"> R$ {{ produto.precoUnitario | number:'1.2-2' }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+        <mat-cell *matCellDef="let produto">
+          <button mat-icon-button matTooltip="Editar" (click)="editar(produto)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" matTooltip="Excluir" (click)="remover(produto)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </mat-card>
+  
+  

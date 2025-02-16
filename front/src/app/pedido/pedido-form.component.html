@@ -1,0 +1,78 @@
+<div class="container">
+    <h2>Novo Pedido</h2>
+  
+    <form [formGroup]="pedidoForm">
+      <!-- Seleção de Cliente -->
+      <mat-form-field class="full-width">
+        <mat-label>Cliente</mat-label>
+        <mat-select formControlName="clienteId">
+          <mat-option *ngFor="let cliente of clientes$ | async" [value]="cliente.id">
+            {{ cliente.nome }} ({{ cliente.cpf }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field class="half-width">
+        <mat-label>Produto</mat-label>
+        <mat-select formControlName="produtoId">
+          <mat-option *ngFor="let produto of produtos$ | async" [value]="produto.id">
+            {{ produto.descricao }} - R$ {{ produto.precoUnitario | number:'1.2-2' }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>      
+  
+      <!-- Quantidade -->
+      <mat-form-field class="half-width">
+        <mat-label>Quantidade</mat-label>
+        <input matInput type="number" formControlName="quantidade" min="1">
+      </mat-form-field>
+  
+      <!-- Botão Adicionar -->
+      <button mat-raised-button color="primary" (click)="adicionarProduto()" [disabled]="pedidoForm.invalid">
+        Adicionar Produto
+      </button>
+    </form>
+  
+    <!-- Lista de Itens do Pedido -->
+    <h3>Itens do Pedido</h3>
+    <table mat-table [dataSource]="itensPedido" class="mat-elevation-z8">
+      <ng-container matColumnDef="descricao">
+        <th mat-header-cell *matHeaderCellDef>Descrição</th>
+        <td mat-cell *matCellDef="let item">{{ item.produto.descricao }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="quantidade">
+        <th mat-header-cell *matHeaderCellDef>Quantidade</th>
+        <td mat-cell *matCellDef="let item">{{ item.quantidade }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="preco">
+        <th mat-header-cell *matHeaderCellDef>Preço Unitário</th>
+        <td mat-cell *matCellDef="let item">R$ {{ item.produto.precoUnitario | number:'1.2-2' }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="subtotal">
+        <th mat-header-cell *matHeaderCellDef>Subtotal</th>
+        <td mat-cell *matCellDef="let item">R$ {{ item.produto.precoUnitario * item.quantidade | number:'1.2-2' }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let item; let i = index">
+          <button mat-icon-button color="warn" (click)="removerItem(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="['descricao', 'quantidade', 'preco', 'subtotal', 'actions']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['descricao', 'quantidade', 'preco', 'subtotal', 'actions'];"></tr>
+    </table>
+  
+    <h3>Total: R$ {{ total | number:'1.2-2' }}</h3>
+  
+    <button mat-raised-button color="accent" (click)="salvarPedido()" [disabled]="itensPedido.length === 0">
+      Finalizar Pedido
+    </button>
+  </div>
+  

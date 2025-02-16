@@ -1,0 +1,37 @@
+.pedido-container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  input, button {
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  button {
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  .mat-snack-bar-container {
+    z-index: 9999 !important;  // Garante que fique acima de outros elementos
+    background-color: #323232 !important; // Cor padrão do Angular Material
+    color: white !important;
+  }
+  

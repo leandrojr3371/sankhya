@@ -1,0 +1,27 @@
+.container {
+    margin: 20px;
+  }
+  
+  .filter {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .filter mat-form-field {
+    width: 200px;
+    margin-right: 10px;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  mat-header-cell, mat-cell {
+    text-align: center;
+  }
+  
+  mat-icon {
+    vertical-align: middle;
+  }
+  

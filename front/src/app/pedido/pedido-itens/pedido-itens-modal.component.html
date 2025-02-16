@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Itens do Pedido</h2>
+<mat-dialog-content>
+  <table mat-table [dataSource]="data.pedidoItens" class="mat-elevation-z8">
+    <ng-container matColumnDef="produto">
+      <th mat-header-cell *matHeaderCellDef> Produto </th>
+      <td mat-cell *matCellDef="let item"> {{ item.produto }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="quantidade">
+      <th mat-header-cell *matHeaderCellDef> Quantidade </th>
+      <td mat-cell *matCellDef="let item"> {{ item.quantidade }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="preco">
+      <th mat-header-cell *matHeaderCellDef> Preço </th>
+      <td mat-cell *matCellDef="let item"> {{ item.preco | currency }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef> Total Item </th>
+        <td mat-cell *matCellDef="let item"> {{ item.totalItem | currency }} </td>
+      </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onClose()">Fechar</button>
+</mat-dialog-actions>

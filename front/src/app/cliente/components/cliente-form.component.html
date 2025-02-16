@@ -1,0 +1,66 @@
+<!-- Formulário de cadastro -->
+<div class="form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Cadastro de Cliente</mat-card-title>
+    </mat-card-header>
+
+    <form [formGroup]="clienteForm" (ngSubmit)="cadastrar()">
+      <mat-form-field appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" placeholder="Nome do cliente">
+        <mat-error *ngIf="clienteForm.get('nome')?.hasError('required')">Nome é obrigatório.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>CPF</mat-label>
+        <input matInput formControlName="cpf" placeholder="CPF do cliente" maxlength="14">
+        <mat-error *ngIf="clienteForm.get('cpf')?.hasError('required')">CPF é obrigatório.</mat-error>
+        <mat-error *ngIf="clienteForm.get('cpf')?.hasError('pattern')">Informe um CPF válido (apenas números).</mat-error>
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="clienteForm.invalid">
+          {{ selectedClient ? 'Editar' : 'Cadastrar' }}
+        </button>
+        <button mat-raised-button color="warn" type="button" (click)="resetForm()">Limpar</button>
+      </div>
+    </form>
+
+  </mat-card>
+</div>
+
+<!-- Lista de clientes -->
+<mat-card *ngIf="clientes$ | async as clientes">
+  <mat-card-header>
+    <mat-card-title>Lista de Clientes</mat-card-title>
+  </mat-card-header>
+
+  <mat-table [dataSource]="clientes" class="mat-elevation-z8">
+    <ng-container matColumnDef="nome">
+      <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+      <mat-cell *matCellDef="let cliente"> {{ cliente.nome }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="cpf">
+      <mat-header-cell *matHeaderCellDef> CPF </mat-header-cell>
+      <mat-cell *matCellDef="let cliente"> {{ cliente.cpf }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+      <mat-cell *matCellDef="let cliente">
+        <button mat-icon-button matTooltip="Editar" (click)="editar(cliente)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" matTooltip="Excluir" (click)="remover(cliente)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</mat-card>
+
