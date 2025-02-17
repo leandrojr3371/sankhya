@@ -32,4 +32,8 @@ public class Cliente {
     @JsonIgnore
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<Pedido> pedidos;
+
+    public Cliente(String nome){
+        this.nome = nome;
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.sankhya.service.impl;
 
 import com.example.sankhya.controller.dto.PedidoDTO;
+import com.example.sankhya.controller.dto.PedidoFiltroDTO;
 import com.example.sankhya.controller.dto.PedidoItensDTO;
 import com.example.sankhya.domain.Cliente;
 import com.example.sankhya.domain.Pedido;
@@ -16,6 +17,8 @@ import com.example.sankhya.repository.ProdutoRepository;
 import com.example.sankhya.service.PedidoService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -116,26 +119,36 @@ public class PedidoServiceImpl implements PedidoService {
      * O método é assíncrono e utiliza paralelismo condicional para melhorar o desempenho, especialmente quando
      * há uma grande quantidade de pedidos a serem processados. Quando um cliente é fornecido, o relatório
      * será restrito aos pedidos desse cliente. Caso contrário, o relatório incluirá todos os pedidos no sistema.
-     * @param clienteId ID do cliente cujos pedidos devem ser retornados. Se for {@code null}, retorna todos os pedidos.
+     * @param filtro do cliente cujos pedidos devem ser retornados. Se for {@code null}, retorna todos os pedidos.
      * @return Um {@code CompletableFuture} contendo o conjunto de {@code PedidoDTO}s.
-     * @throws IllegalArgumentException Se o {@code clienteId} for fornecido, mas o cliente não for encontrado.
      */
     @Override
     @Async
-    public CompletableFuture<Set<PedidoDTO>> relatorioGeral(Long clienteId) {
-        if (clienteId != null) {
-            return buscarPedidosPorCliente(clienteId);
+    public CompletableFuture<Set<PedidoDTO>> relatorioGeral(PedidoFiltroDTO filtro) {
+        if (filtro != null) {
+            return buscarPedidosPorClienteFiltro(filtro);
         } else {
             return buscarPedidosGerais();
         }
     }
 
-    private CompletableFuture<Set<PedidoDTO>> buscarPedidosPorCliente(Long clienteId) {
+    private CompletableFuture<Set<PedidoDTO>> buscarPedidosPorClienteFiltro(PedidoFiltroDTO filtro) {
         return CompletableFuture.supplyAsync(() -> {
-            Cliente cliente = clienteRepository.findById(clienteId)
-                    .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
+            ExampleMatcher matcher = ExampleMatcher.matching()
+                    .withIgnoreCase()
+                    .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
 
-            Set<Pedido> pedidos = pedidoRepository.findByClienteWithItems(cliente);
+            Example<Cliente> example = Example.of(new Cliente(filtro.getNomeCliente()), matcher);
+            Set<Cliente> clientes = new HashSet<>(clienteRepository.findAll(example));
+
+            if (clientes.isEmpty()) {
+                return new HashSet<>();
+            }
+
+            Set<Pedido> pedidos = clientes.stream()
+                    .flatMap(cliente -> pedidoRepository.findByClienteWithItems(cliente).stream())
+                    .collect(Collectors.toSet());
+
             return processarPedidosEmParalelo(pedidos);
         }, taskExecutor);
     }
@@ -148,12 +161,10 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     private Set<PedidoDTO> processarPedidosEmParalelo(Set<Pedido> pedidos) {
-        // Se o número de pedidos for grande, divide em partes menores para processar em paralelo
         if (pedidos.size() > 100) {
-            Set<Pedido> pedidosSet = new HashSet<>(pedidos);  // Garantir que seja um Set
+            Set<Pedido> pedidosSet = new HashSet<>(pedidos);
             Set<CompletableFuture<Set<PedidoDTO>>> futures = new HashSet<>();
 
-            // Divide os pedidos em partes menores e processa em paralelo
             Iterator<Pedido> iterator = pedidosSet.iterator();
             while (iterator.hasNext()) {
                 Set<Pedido> subSet = new HashSet<>();
@@ -165,7 +176,6 @@ public class PedidoServiceImpl implements PedidoService {
                         subSet.stream().map(PedidoDTO::new).collect(Collectors.toSet()), taskExecutor));
             }
 
-            // Combina os resultados
             return futures.stream()
                     .map(CompletableFuture::join)
                     .flatMap(Set::stream)

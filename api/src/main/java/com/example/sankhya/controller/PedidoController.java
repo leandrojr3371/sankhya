@@ -1,9 +1,6 @@
 package com.example.sankhya.controller;
 
-import com.example.sankhya.controller.dto.AtualizaStatusPedido;
-import com.example.sankhya.controller.dto.InformacoesPedidoDTO;
-import com.example.sankhya.controller.dto.InformacoesPedidoItensDTO;
-import com.example.sankhya.controller.dto.PedidoDTO;
+import com.example.sankhya.controller.dto.*;
 import com.example.sankhya.domain.Pedido;
 import com.example.sankhya.domain.PedidoItens;
 import com.example.sankhya.domain.enums.PedidoStatus;
@@ -99,8 +96,8 @@ public class PedidoController {
             })
     @PreAuthorize("hasRole('CHEFE')")
     @GetMapping("/relatorio")
-    public CompletableFuture<Set<PedidoDTO>> getRelatorioGeral(@RequestParam(required = false) Long clienteId) {
-        return pedidoService.relatorioGeral(clienteId);
+    public CompletableFuture<Set<PedidoDTO>> getRelatorioGeral(PedidoFiltroDTO filtro) {
+        return pedidoService.relatorioGeral(filtro);
     }
 
 }

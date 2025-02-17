@@ -40,6 +40,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers("/cliente/**").permitAll()
+                        .requestMatchers("/produto/**").permitAll()  // Agora permite acesso a produtos
+                        .requestMatchers("/pedido/**").permitAll()   // Agora permite acesso a pedidos
+                        .requestMatchers("/relatorio-pedido/**").hasRole("CHEFE")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

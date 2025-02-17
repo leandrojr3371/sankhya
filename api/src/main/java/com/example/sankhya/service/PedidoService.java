@@ -1,6 +1,7 @@
 package com.example.sankhya.service;
 
 import com.example.sankhya.controller.dto.PedidoDTO;
+import com.example.sankhya.controller.dto.PedidoFiltroDTO;
 import com.example.sankhya.domain.Pedido;
 import com.example.sankhya.domain.enums.PedidoStatus;
 import org.springframework.scheduling.annotation.Async;
@@ -17,5 +18,5 @@ public interface PedidoService {
 
     void atualizaStatusPedido(Long id, PedidoStatus pedidoStatus);
 
-    CompletableFuture<Set<PedidoDTO>> relatorioGeral(Long clienteId);
+    CompletableFuture<Set<PedidoDTO>> relatorioGeral(PedidoFiltroDTO filtro);
 }
