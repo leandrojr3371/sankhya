@@ -10,10 +10,13 @@ FRONT-END
 execute o comando: ng serve
 
 Após startar backend e front-end pode logar com:
+
 usuario:funcionario
+
 senha:senha123
 
 ou
 
 usuario:chefe
+
 senha:senha123
