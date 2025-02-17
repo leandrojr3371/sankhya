@@ -1,12 +1,13 @@
 BACKEND
-Gerar a pasta target, roda um mvn clean install -DskipTests
+Gerar a pasta target, roda o comando: mvn clean install -DskipTests
 
 Após gerar a pasta target com SNAPSHOT, rodar docker
 
-docker-compose up --build
+execute o comando: docker-compose up --build
 
 FRONT-END
-ng serve
+
+execute o comando: ng serve
 
 Após startar backend e front-end pode logar com:
 usuario:funcionario
