@@ -41,17 +41,16 @@ export class PedidoService {
     return this.http.patch<void>(`${this.apiUrl}/updateStatus/${id}`, { novoStatus });
   }
 
-  relatorioGeral(clienteId: number | null, carregarItens: boolean): Observable<Pedido[]> {
+  relatorioGeral(nomeCliente: string | null): Observable<Pedido[]> {
     const params = new HttpParams()
-      .set('carregarItens', carregarItens.toString())
-      .set('clienteId', clienteId ? clienteId.toString() : '');
+      .set('nomeCliente', nomeCliente ? nomeCliente : '');
   
     return this.http.get<Pedido[]>(`${this.apiUrl}/relatorio`, { params });
-  }
+  }  
 
   cancelarPedido(pedidoId: number): Observable<void> {
     const status = { novoStatus: 'CANCELADO' }; 
-    return this.http.patch<void>(`${this.apiUrl}/updateStatus/${pedidoId}`, status);
+    return this.http.patch<void>(`${this.apiUrl}/cancelaPedido/${pedidoId}`, status);
   }
 
 }

@@ -1,0 +1,18 @@
+<!-- app-header.component.html -->
+<div class="container">
+  <nav class="sidebar">
+    <h2>Projeto Sankhya</h2>
+    <ul>
+      <li><a routerLink="cliente" routerLinkActive="active">Cliente</a></li>
+      <li><a routerLink="produto" routerLinkActive="active">Produto</a></li>
+      <li><a routerLink="pedido" routerLinkActive="active">Pedido</a></li>
+      <li><a routerLink="relatorio-pedido" routerLinkActive="active">Relatório de Pedidos</a></li>
+      <li><a (click)="logout()" routerLinkActive="active" class="logout-link">Sair</a></li>
+    </ul>      
+  </nav>
+
+  <!-- Conteúdo principal que irá aparecer ao lado do menu -->
+  <div class="content">
+    <router-outlet></router-outlet>  <!-- Aqui será carregado o conteúdo das rotas -->
+  </div>
+</div>

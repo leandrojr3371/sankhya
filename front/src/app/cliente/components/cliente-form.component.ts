@@ -59,6 +59,7 @@ export class ClienteFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('clientes aqui');
     this.listarClientes();
   }
 

@@ -1,0 +1,40 @@
+// login.component.scss
+
+// Cores principais
+$primary-color: #4caf50;
+$secondary-color: #ffffff;
+$background-color: #f4f7f6;
+$text-color: #333333;
+
+// Fontes
+$font-family: 'Arial', sans-serif;
+
+// Estilos gerais
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family;
+  background-color: $background-color;
+  color: $text-color;
+}
+
+// Container principal
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: $background-color;
+}
+
+// Formulário de login
+.login-form {
+  background-color: $secondary-color;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

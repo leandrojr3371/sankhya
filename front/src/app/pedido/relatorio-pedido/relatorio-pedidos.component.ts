@@ -48,7 +48,8 @@ export class RelatorioPedidosComponent implements OnInit {
     clienteId: number | null = null;
     displayedColumns: string[] = ['id', 'cliente', 'status', 'total', 'acoes'];  // Colunas da tabela
     dataSource = new MatTableDataSource<any>(this.pedidos);
-  
+    nomeCliente: string = '';
+    
     constructor(private pedidoService: PedidoService, public dialog: MatDialog, private snackBar: MatSnackBar) {}
   
     ngOnInit(): void {
@@ -56,15 +57,12 @@ export class RelatorioPedidosComponent implements OnInit {
     }
   
     getPedidos(): void {
-        const carregarItens = true; // Ou false, dependendo de quando você quiser carregar os itens
-      
-        this.pedidoService.relatorioGeral(this.clienteId, carregarItens).subscribe((pedidos: any[]) => {
-          this.pedidos = pedidos;
-          this.dataSource.data = pedidos;
-          console.log('Pedido', this.pedidos)
-        });
-      }
-      
+      this.pedidoService.relatorioGeral(this.nomeCliente).subscribe((pedidos: any[]) => {
+        this.pedidos = pedidos;
+        this.dataSource.data = pedidos;
+        console.log('Pedido', this.pedidos)
+      });
+    }     
   
     verItensPedido(pedidoId: number): void {
         // Aqui você busca os itens do pedido, você pode modificar para pegar da API

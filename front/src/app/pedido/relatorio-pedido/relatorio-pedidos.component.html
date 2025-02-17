@@ -2,12 +2,12 @@
     <div class="filter">
       <mat-form-field appearance="fill">
         <mat-label>Filtrar por cliente</mat-label>
-        <input matInput [(ngModel)]="clienteId" placeholder="ID do cliente">
+        <input matInput [(ngModel)]="nomeCliente" placeholder="Nome do cliente">
       </mat-form-field>
       <button mat-raised-button color="primary" (click)="getPedidos()">
         <mat-icon>search</mat-icon> Buscar
       </button>
-    </div>
+    </div>  
   
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="id">
