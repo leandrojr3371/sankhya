@@ -27,7 +27,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh; /* Garante que o container ocupe toda a altura da tela */
   background-color: $background-color;
 }
 
