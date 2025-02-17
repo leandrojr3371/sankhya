@@ -22,7 +22,7 @@ public class PedidoDTO {
     private String nomeCliente;
     private Long id;
 
-    public PedidoDTO(Pedido pedido, boolean carregarItens) {
+    public PedidoDTO(Pedido pedido) {
         this.clienteId = pedido.getCliente() != null ? pedido.getCliente().getId() : null;
         this.total = pedido.getTotal();
         this.pedidoItens = pedido.getPedidoItens().stream()
@@ -31,11 +31,5 @@ public class PedidoDTO {
         this.pedidoStatus = pedido.getPedidoStatus().name();
         this.nomeCliente = pedido.getCliente().getNome();
         this.id = pedido.getId();
-
-        if (carregarItens) {
-            this.pedidoItens = pedido.getPedidoItens().stream()
-                    .map(PedidoItensDTO::new)
-                    .collect(Collectors.toSet());
-        }
     }
 }
