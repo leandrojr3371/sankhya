@@ -1,7 +1,10 @@
-  .container {
-    display: flex;
-    height: 100vh;
-  }
+.container {
+  width: 100%;   /* Certifica-se de que ocupe toda a largura da tela */
+  min-height: 100vh;  /* Garante que ocupe toda a altura da tela */
+  display: flex;  /* Flexbox para organizar os itens */
+  flex-direction: column;  /* Ajuste para o layout vertical */
+  padding-top: 20px;
+}
   
   .sidebar {
     width: 250px;

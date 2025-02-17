@@ -16,7 +16,8 @@ $font-family: 'Arial', sans-serif;
   box-sizing: border-box;
 }
 
-body {
+html, body {
+  height: 100%; // Garante que a altura do HTML e do body seja 100% da tela
   font-family: $font-family;
   background-color: $background-color;
   color: $text-color;
@@ -27,8 +28,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Garante que o container ocupe toda a altura da tela */
+  height: 100vh;
   background-color: $background-color;
+  flex-direction: column; // Adicionando isso para organizar o conteúdo em coluna
+  padding: 0 15px; // Garantir que tenha algum espaçamento nas laterais
 }
 
 // Formulário de login
@@ -37,4 +40,20 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%; // Garantir que o formulário ocupe 100% da largura disponível
+  max-width: 400px; // Limitar a largura máxima do formulário
 }
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.error {
+  color: red;
+  margin-top: 20px;
+}
+

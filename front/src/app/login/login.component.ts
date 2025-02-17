@@ -47,7 +47,7 @@ export class LoginComponent {
           this.authService.setToken(response.token); 
           console.log('Token armazenado com sucesso!');
           
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home/cliente']);
         } else {
           this.showError('Usuário ou senha inválidos');
         }

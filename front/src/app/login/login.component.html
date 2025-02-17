@@ -1,15 +1,15 @@
 <div class="login-container">
   <h2>Login</h2>
-  
+
   <!-- Formulário de Login -->
-  <form (ngSubmit)="login()">
-    <mat-form-field appearance="fill">
+  <form class="login-form" (ngSubmit)="login()">
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Usuário</mat-label>
       <input matInput type="text" [(ngModel)]="username" name="username" required />
       <mat-error *ngIf="!username">Este campo é obrigatório</mat-error>
     </mat-form-field>
-    
-    <mat-form-field appearance="fill">
+
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Senha</mat-label>
       <input matInput type="password" [(ngModel)]="password" name="password" required />
       <mat-error *ngIf="!password">Este campo é obrigatório</mat-error>
@@ -19,7 +19,7 @@
       <button mat-raised-button color="primary" type="submit">Entrar</button>
     </div>
   </form>
-  
+
   <!-- Mensagem de erro caso falhe -->
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
 </div>

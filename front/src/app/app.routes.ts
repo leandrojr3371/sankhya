@@ -9,16 +9,17 @@ import { AppComponent } from './app.component';
 
 export const routes: Routes = [
   {
-    path: 'home', 
-    component: AppComponent,  // AppComponent será o layout com o menu
+    path: 'home',
+    component: AppComponent,  
+    canActivate: [AuthGuard], 
     children: [
-      { path: 'cliente', component: ClienteFormComponent, canActivate: [AuthGuard] },
-      { path: 'produto', component: ProdutoComponent, canActivate: [AuthGuard] },
-      { path: 'pedido', component: PedidoComponent, canActivate: [AuthGuard] },
-      { path: 'relatorio-pedido', component: RelatorioPedidosComponent, canActivate: [AuthGuard] },
-      { path: '', redirectTo: 'cliente', pathMatch: 'full' }  // Redireciona para "cliente" por padrão
+      { path: 'cliente', component: ClienteFormComponent },
+      { path: 'produto', component: ProdutoComponent },
+      { path: 'pedido', component: PedidoComponent },
+      { path: 'relatorio-pedido', component: RelatorioPedidosComponent },
+      { path: '', redirectTo: 'cliente', pathMatch: 'full' }
     ]
   },
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }  // Redireciona para login por padrão
+  { path: '', redirectTo: '/login', pathMatch: 'full' }  
 ];
