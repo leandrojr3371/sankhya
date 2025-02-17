@@ -9,7 +9,7 @@ FRONT-END
 
 execute o comando: ng serve
 
-Após startar backend e front-end pode logar com:
+Após startar backend e front-end acesse http://localhost:4200/ e pode logar com:
 
 usuario:funcionario
 
