@@ -1,22 +1,53 @@
 BACKEND
-Gerar a pasta target, roda o comando: mvn clean install -DskipTests
 
-Após gerar a pasta target com SNAPSHOT, rodar docker
+Generate the target folder by running the following command:
 
-execute o comando: docker-compose up --build
+```bash
+mvn clean install -DskipTests
+```
+
+After generating the target folder with the SNAPSHOT build, start Docker by running:
+
+```bash
+docker-compose up --build
+```
 
 FRONT-END
 
-execute o comando: ng serve
+Run the following command:
 
-Após startar backend e front-end acesse http://localhost:4200/ e pode logar com:
+```bash
+ng serve
+```
 
-usuario:funcionario
+After starting both the backend and frontend, access:
 
-senha:senha123
+http://localhost:4200/
 
-ou
+You can log in using:
 
-usuario:chefe
+User:
 
-senha:senha123
+```
+funcionario
+```
+
+Password:
+
+```
+senha123
+```
+
+or:
+
+User:
+
+```
+chefe
+```
+
+Password:
+
+```
+senha123
+```
